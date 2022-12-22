@@ -8,7 +8,7 @@ import {
 
 import nookies from 'nookies'
 
-const httpLink = new HttpLink({ uri: 'http://localhost:4001' })
+const httpLink = new HttpLink({ uri: process.env.NEXT_PUBLIC_DEV_BASE_URL })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   const token = nookies.get(null, 'template-token')['template-token']
