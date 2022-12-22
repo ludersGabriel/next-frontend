@@ -1,10 +1,8 @@
-'use client'
-
 import { ApolloProvider } from '@apollo/client'
 import client from '../../apollo/apollo-client'
-import { LayoutWrapper } from '../../app/styles'
 import AuthProvider from '../../context/auth.provider'
 import { User } from '../../graphql/types'
+import { LayoutWrapper } from '../../styles/home'
 
 type IProps = {
   children: React.ReactNode

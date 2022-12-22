@@ -1,9 +1,9 @@
-'use client'
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../../context/auth.context'
 import { LoginInput } from '../../graphql/types'
+import { Button } from '../../styles/global'
 import { FormWrapper, Input, InputWrapper } from './style'
 
 // ! note: never ship this to production
@@ -75,7 +75,7 @@ const Login = () => {
         />
       </InputWrapper >
 
-      <input type='submit' />
+      <Button>submit</Button>
     </FormWrapper >
   )
 
