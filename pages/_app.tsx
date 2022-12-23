@@ -7,6 +7,7 @@ import Providers from '../components/provider'
 import GlobalStyles from '../styles/global'
 import Router from 'next/router'
 import Head from 'next/head'
+import { Toaster } from 'react-hot-toast'
 
 
 type Props = AppProps & {
@@ -46,6 +47,7 @@ const MyApp = ({ Component, pageProps, token, user }: Props) => {
       </Head>
       <Component {...pageProps} />
       <GlobalStyles />
+      <Toaster />
     </Providers>
   )
 }
@@ -64,6 +66,7 @@ MyApp.getInitialProps = async ({ ctx }: AppContext) => {
 
   if (pathname !== '/' && (!user || !token)) {
     if (res) {
+      nookies.set(ctx, 'template-token', '', { path: '/', sameSite: true })
       res.writeHead(302, { Location: '/' })
       res.end()
     } else {

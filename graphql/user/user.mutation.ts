@@ -24,6 +24,10 @@ export const useMe = () => {
 }
 
 export const serverMe = async (token: string): Promise<{me: User | null}> => {
+  if(!token) {
+    me: null
+  }
+  
   const { data } = await client.mutate<MeMutation, MeMutation>({
     mutation: ME,
     context: {

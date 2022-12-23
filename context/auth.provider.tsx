@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react'
-import { useLogin } from '../graphql/auth/auth.mutation'
+import { useLogin, useLogout } from '../graphql/auth/auth.mutation'
 import { LoginInput, User, Role } from '../graphql/types'
 import { AuthContext } from './auth.context'
 import nookies from 'nookies'
@@ -23,6 +23,7 @@ const AuthProvider = ({ children, user: serverUser, token: serverToken }: AuthPr
   const [token, setToken] = useState<string>(serverToken)
   const [user, setUser] = useState<User>(serverUser ? serverUser : defaultUser)
   const login = useLogin()
+  const logout = useLogout()
   const router = useRouter()
 
   async function signIn(input: LoginInput) {
@@ -37,8 +38,8 @@ const AuthProvider = ({ children, user: serverUser, token: serverToken }: AuthPr
     return token
   }
 
-  // TODO: blacklist the token
   async function signOut() {
+    await logout(token)
     nookies.set(null, 'template-token', '', { path: '/', sameSite: true })
     router.push('/')
   }

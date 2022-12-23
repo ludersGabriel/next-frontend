@@ -1,6 +1,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 import { useAuth } from '../../context/auth.context'
 import { LoginInput } from '../../graphql/types'
 import { Button } from '../../styles/global'
@@ -9,7 +10,8 @@ import { FormWrapper, Input, InputWrapper } from './style'
 // ! note: never ship this to production
 const defaultValues: LoginInput = {
   username: 'admin',
-  password: '1234mudar'
+  password: '1234mudar',
+  device: undefined
 }
 
 const Login = () => {
@@ -20,12 +22,15 @@ const Login = () => {
   const { signIn } = useAuth()
   const router = useRouter()
 
-  const onSubmit = (data: LoginInput) => {
+  const onSubmit = async (data: LoginInput) => {
     signIn(data)
       .then(res => {
         router.push('/dashboard')
       })
-      .catch(err => console.log({ err }))
+      .catch(() => toast.error(
+        'Credenciais erradas ou usuário não encontrado',
+        { icon: '🤔', style: { color: 'red' } }
+      ))
   }
 
   return (
